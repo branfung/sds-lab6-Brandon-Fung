@@ -13,11 +13,16 @@
 # limitations under the License.
 
 # ---- YOUR APP STARTS HERE ----
+
+#LAB6 MEMBERS:
+#Brandon Fung Rivera
+#Aman Singh
+
 # -- Import section --
 from flask import Flask
-# from flask import render_template
-# from flask import request
-
+from flask import render_template
+from flask import request
+from model import capitals_output
 
 # -- Initialization section --
 app = Flask(__name__)
@@ -27,4 +32,24 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    return "hello world"
+    return render_template('index.html')
+
+@app.route('/results', methods=['GET', 'POST'])
+def results():
+    answers = {
+        'NY': request.form['New York'],
+        'CA': request.form['California'],
+        'FL': request.form['Florida'],
+        'WA': request.form['Washington'],
+        'NV': request.form['Nevada']
+    }
+    # return model.capitals_output(answers)
+    # TODO: Create a results.html page that is rendered when the /results route is used in app.py.
+    #         Use Jinja templating to include the output of the function in model.py as part of the results.html page.
+
+    #         In app.py, use render_template to send the user to results.html when the form has been filled out (POST request).
+    #         Make sure to display to the user which answers are correct and which answers are wrong.
+    #         If the form has not been completed (GET request), return a string explaining that they need to go back to the form.
+
+    return render_template('results.html', answers=capitals_output(answers))
+
