@@ -20,9 +20,12 @@
 
 # -- Import section --
 from flask import Flask
+from flask import redirect
 from flask import render_template
 from flask import request
 from model import capitals_output
+
+states_capitals = {'FL': ('Florida', 'Tallahassee'), 'NY': ('NewYork', 'Albany'), 'WA': ('Washington', 'Olympia'), 'CA': ('California', 'Sacramento'), 'NV': ('Nevada', 'Carson city')}
 
 # -- Initialization section --
 app = Flask(__name__)
@@ -36,6 +39,10 @@ def index():
 
 @app.route('/results', methods=['GET', 'POST'])
 def results():
+
+    if request.method == "GET":
+        return redirect('/index')
+
     answers = {
         'NY': request.form['New York'],
         'CA': request.form['California'],
@@ -51,5 +58,7 @@ def results():
     #         Make sure to display to the user which answers are correct and which answers are wrong.
     #         If the form has not been completed (GET request), return a string explaining that they need to go back to the form.
 
-    return render_template('results.html', answers=capitals_output(answers))
+
+    return render_template('results.html', answers=capitals_output(answers), state = states_capitals)
+
 
