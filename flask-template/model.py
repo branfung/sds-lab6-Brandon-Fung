@@ -16,8 +16,13 @@ def capitals_output(answers):
     states_capitals = {'FL': 'tallahassee', 'NY': 'albany', 'WA': 'olympia', 'CA': 'sacramento', 'NV': 'carson city'}
 
     results = dict()
-
     for state, answer in answers.items():
-        results[state] = states_capitals[state] == answer.lower()
-    
+        results[state] = states_capitals[state] == answer.lower()   
     return results 
+
+def accuracy(answers):
+    count = 0
+    for value in capitals_output(answers).values():
+        if value == True:
+            count += 1
+    return (count / 5) * 100

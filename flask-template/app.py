@@ -24,9 +24,10 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from model import capitals_output
+from model import accuracy
+
 
 states_capitals = {'FL': ('Florida', 'Tallahassee'), 'NY': ('NewYork', 'Albany'), 'WA': ('Washington', 'Olympia'), 'CA': ('California', 'Sacramento'), 'NV': ('Nevada', 'Carson city')}
-
 # -- Initialization section --
 app = Flask(__name__)
 
@@ -50,15 +51,7 @@ def results():
         'WA': request.form['Washington'],
         'NV': request.form['Nevada']
     }
-    # return model.capitals_output(answers)
-    # TODO: Create a results.html page that is rendered when the /results route is used in app.py.
-    #         Use Jinja templating to include the output of the function in model.py as part of the results.html page.
-
-    #         In app.py, use render_template to send the user to results.html when the form has been filled out (POST request).
-    #         Make sure to display to the user which answers are correct and which answers are wrong.
-    #         If the form has not been completed (GET request), return a string explaining that they need to go back to the form.
-
-
-    return render_template('results.html', answers=capitals_output(answers), state = states_capitals)
+   
+    return render_template('results.html', answers=capitals_output(answers), state = states_capitals, accuracy = accuracy(answers))
 
 
